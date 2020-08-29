@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName(value = "music_musiclist")
 public class MusicMusicList {
-    private Integer id;
+    private Integer musiclistId;
     private Integer musicId;
 
 }

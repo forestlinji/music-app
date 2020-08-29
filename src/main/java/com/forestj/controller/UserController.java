@@ -161,7 +161,7 @@ public class UserController {
      * @param changePasswordVo
      * @return
      */
-    @PostMapping("/changePassword")
+    @PostMapping("/change")
     public ResponseJson changePassword(@Valid @RequestBody ChangePasswordVo changePasswordVo) {
         String oldPassword = changePasswordVo.getOldPassword();
         String newPassword = changePasswordVo.getNewPassword();

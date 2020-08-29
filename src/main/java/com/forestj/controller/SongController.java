@@ -223,6 +223,15 @@ public class SongController {
         return new ResponseJson(ResultCode.SUCCESS);
     }
 
+    @GetMapping("get")
+    public ResponseJson<Song> getSongById(Integer id){
+        Song song = songService.findSongById(id);
+        if(song == null){
+            return new ResponseJson(ResultCode.UNVALIDPARAMS, null);
+        }
+        return new ResponseJson<>(ResultCode.SUCCESS, song);
+    }
+
 
     private String getLink(Song song){
         String link = "music/music/" + song.getId() + "_" + song.getName() + ".mp3";

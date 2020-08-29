@@ -18,7 +18,7 @@ public interface SongMapper extends BaseMapper<Song> {
 
     @Select("SELECT s.id,s.`name`,s.singer,s.longs,s.link,s.image \n" +
             "FROM song s,music_musiclist m\n" +
-            "WHERE s.id = m.music_id AND m.musiclist_id = 4")
+            "WHERE s.id = m.music_id AND m.musiclist_id = #{id}")
     List<Song> getSongByMusicList(Integer id);
 
 }

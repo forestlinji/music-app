@@ -10,6 +10,7 @@ import com.forestj.pojo.Musiclist;
 import com.forestj.service.MusiclistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MusiclistServiceImpl implements MusiclistService {
@@ -51,6 +52,12 @@ public class MusiclistServiceImpl implements MusiclistService {
 
     @Override
     public int add(Integer musicListId, Integer singId) {
+        MusicMusicList musicMusicList = musicMusicListMapper.selectOne(new QueryWrapper<MusicMusicList>()
+                .eq("musiclist_id", musicListId)
+                .eq("music_id", singId));
+        if(musicMusicList != null){
+            return 0;
+        }
         return musiclistMapper.add(musicListId,singId);
     }
 

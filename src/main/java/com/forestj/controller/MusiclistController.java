@@ -115,9 +115,10 @@ public class MusiclistController {
             return new ResponseJson(ResultCode.UNVALIDPARAMS);
         }
         int res = musiclistService.add(musicListId, singId);
-        if (res != 0) ;
-        musiclist.setNum(musiclist.getNum() + 1);
-        musiclistService.update(musiclist);
+        if (res != 0){
+            musiclist.setNum(musiclist.getNum() + 1);
+            musiclistService.update(musiclist);
+        }
         return new ResponseJson(ResultCode.SUCCESS);
     }
 
@@ -172,5 +173,12 @@ public class MusiclistController {
         musiclist.setNum(musiclist.getNum() - deleteSongs);
         musiclistService.update(musiclist);
         return new ResponseJson(ResultCode.SUCCESS);
+    }
+
+    @GetMapping("get")
+    public ResponseJson<Musiclist> getListById(@NotNull Integer id){
+        Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
+        Musiclist musiclist = musiclistService.selectMusicListById(id, userId);
+        return new ResponseJson<>(ResultCode.SUCCESS, musiclist);
     }
 }
