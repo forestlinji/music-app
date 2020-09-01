@@ -28,4 +28,5 @@ public class Musiclist {
     @JsonIgnore
     @TableLogic
     private boolean deleted;
+    private boolean open;
 }

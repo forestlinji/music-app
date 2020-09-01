@@ -44,4 +44,6 @@ public interface MusiclistService {
     void deleteMusicList(Integer id);
 
     int deleteSongs(Integer id,Integer[] deleteId);
+
+    Page<Musiclist> search(String word, int pageNum, int pageSize);
 }

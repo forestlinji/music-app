@@ -111,7 +111,7 @@ public class MusiclistController {
         Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
         Song song = songService.findSongById(singId);
         Musiclist musiclist = musiclistService.selectMusicListById(musicListId, userId);
-        if (song == null || musiclist == null) {
+        if (song == null || musiclist == null || !musiclist.getOwnerId().equals(userId)) {
             return new ResponseJson(ResultCode.UNVALIDPARAMS);
         }
         int res = musiclistService.add(musicListId, singId);
@@ -129,7 +129,11 @@ public class MusiclistController {
      */
     @GetMapping("getList")
     public ResponseJson<List<Song>> getList(@NotNull Integer id){
-        Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
+        JwtUser user = this.currentUser.getCurrentUser();
+        Integer userId = -1;
+        if(user != null && user.getUsername() != null){
+            userId = Integer.valueOf(user.getUsername());
+        }
         Musiclist musiclist = musiclistService.selectMusicListById(id, userId);
         if(musiclist == null){
             return new ResponseJson<>(ResultCode.UNVALIDPARAMS);
@@ -147,7 +151,7 @@ public class MusiclistController {
     public ResponseJson delete(@NotNull Integer id){
         Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
         Musiclist musiclist = musiclistService.selectMusicListById(id, userId);
-        if(musiclist == null){
+        if(musiclist == null || !musiclist.getOwnerId().equals(userId)){
             return new ResponseJson<>(ResultCode.UNVALIDPARAMS);
         }
         musiclistService.deleteMusicList(id);
@@ -166,7 +170,7 @@ public class MusiclistController {
         Integer[] deleteId = deleteSongVo.getDeleteId();
         Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
         Musiclist musiclist = musiclistService.selectMusicListById(id, userId);
-        if(musiclist == null){
+        if(musiclist == null || !musiclist.getOwnerId().equals(userId)){
             return new ResponseJson<>(ResultCode.UNVALIDPARAMS);
         }
         int deleteSongs = musiclistService.deleteSongs(id, deleteId);
@@ -175,10 +179,53 @@ public class MusiclistController {
         return new ResponseJson(ResultCode.SUCCESS);
     }
 
+    /**
+     * 获取歌单详情
+     * @param id
+     * @return
+     */
     @GetMapping("get")
-    public ResponseJson<Musiclist> getListById(@NotNull Integer id){
+    public ResponseJson<MusiclistVo> getListById(@NotNull Integer id){
         Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
         Musiclist musiclist = musiclistService.selectMusicListById(id, userId);
-        return new ResponseJson<>(ResultCode.SUCCESS, musiclist);
+        UserInfo userInfo = userService.getUserInfo(musiclist.getOwnerId());
+        MusiclistVo musiclistVo = new MusiclistVo();
+        BeanUtils.copyProperties(musiclist, musiclistVo);
+        musiclistVo.setOwner(userInfo.getUsername());
+        return new ResponseJson<>(ResultCode.SUCCESS, musiclistVo);
+    }
+
+    /**
+     * 更改歌单状态
+     * @param open
+     * @return
+     */
+    @GetMapping("changeState")
+    public ResponseJson changeState(Integer id, boolean open){
+        Integer userId = Integer.valueOf(currentUser.getCurrentUser().getUsername());
+        Musiclist musiclist = musiclistService.selectMusicListById(id, userId);
+        if(musiclist == null || !musiclist.getOwnerId().equals(userId)){
+            return new ResponseJson<>(ResultCode.UNVALIDPARAMS);
+        }
+        musiclist.setOpen(open);
+        musiclistService.update(musiclist);
+        return new ResponseJson(ResultCode.SUCCESS);
+    }
+
+
+    /**
+     * 搜索歌单
+     * @param word
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("search")
+    public ResponseJson<PageResult<Musiclist>> search(String word,
+                                                 @RequestParam(required = false, defaultValue = "1") int pageNum,
+                                                 @RequestParam(required = false, defaultValue = "10") int pageSize){
+        Page<Musiclist> result = musiclistService.search(word, pageNum, pageSize);
+        return new ResponseJson<>(ResultCode.SUCCESS, new PageResult<>(result));
+
     }
 }

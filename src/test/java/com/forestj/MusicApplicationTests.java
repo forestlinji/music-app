@@ -17,10 +17,10 @@ class MusicApplicationTests {
 
     @Test
     public void test01(){
-        Musiclist musiclist = new Musiclist(1, 2, "dasd", 3, new Date(), null, false);
-        MusiclistVo musiclistVo = new MusiclistVo();
-        BeanUtils.copyProperties(musiclist, musiclistVo);
-        System.out.println(musiclistVo);
+//        Musiclist musiclist = new Musiclist(1, 2, "dasd", 3, new Date(), null, false);
+//        MusiclistVo musiclistVo = new MusiclistVo();
+//        BeanUtils.copyProperties(musiclist, musiclistVo);
+//        System.out.println(musiclistVo);
 
     }
 }

@@ -16,4 +16,6 @@ public class MusiclistVo {
     private String name;
     private Integer num;
     private Date createTime;
+    private boolean open;
+
 }

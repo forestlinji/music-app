@@ -46,7 +46,8 @@ public class MusiclistServiceImpl implements MusiclistService {
         return musiclistMapper.selectOne(
                 new QueryWrapper<Musiclist>()
                         .eq("id", listId)
-                        .eq("owner_id", userId)
+                        .and(wrapper -> wrapper.eq("owner_id", userId).or().eq("open", 1))
+
         );
     }
 
@@ -78,5 +79,14 @@ public class MusiclistServiceImpl implements MusiclistService {
                 .eq("musiclist_id", id)
                 .in("music_id", deleteId)
         );
+    }
+
+    @Override
+    public Page<Musiclist> search(String word, int pageNum, int pageSize) {
+        return musiclistMapper.selectPage(
+                new Page<Musiclist>(pageNum, pageSize),
+                new QueryWrapper<Musiclist>()
+                        .like("name", word)
+                        .eq("open", 1));
     }
 }
