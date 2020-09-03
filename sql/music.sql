@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 30/08/2020 13:59:27
+ Date: 03/09/2020 19:17:18
 */
 
 SET NAMES utf8mb4;
@@ -31,6 +31,7 @@ CREATE TABLE `collect`  (
 -- Records of collect
 -- ----------------------------
 INSERT INTO `collect` VALUES (1, 1);
+INSERT INTO `collect` VALUES (1, 2);
 INSERT INTO `collect` VALUES (1, 5);
 
 -- ----------------------------
@@ -57,6 +58,7 @@ INSERT INTO `comment` VALUES (6, 5, 1, '发表', '2020-08-29 13:35:12');
 INSERT INTO `comment` VALUES (7, 5, 1, '啦啦啦', '2020-08-29 13:35:39');
 INSERT INTO `comment` VALUES (8, 1, 1, '。。。', '2020-08-29 13:48:41');
 INSERT INTO `comment` VALUES (9, 2, 1, 'dasdasd', '2020-08-29 15:22:07');
+INSERT INTO `comment` VALUES (10, 4, 1, '12345', '2020-09-01 15:39:32');
 
 -- ----------------------------
 -- Table structure for music_musiclist
@@ -74,8 +76,10 @@ CREATE TABLE `music_musiclist`  (
 INSERT INTO `music_musiclist` VALUES (4, 1);
 INSERT INTO `music_musiclist` VALUES (4, 2);
 INSERT INTO `music_musiclist` VALUES (6, 4);
+INSERT INTO `music_musiclist` VALUES (7, 2);
 INSERT INTO `music_musiclist` VALUES (7, 3);
-INSERT INTO `music_musiclist` VALUES (7, 5);
+INSERT INTO `music_musiclist` VALUES (8, 1);
+INSERT INTO `music_musiclist` VALUES (8, 3);
 
 -- ----------------------------
 -- Table structure for musiclist
@@ -88,16 +92,18 @@ CREATE TABLE `musiclist`  (
   `num` int(11) NULL DEFAULT NULL COMMENT '歌曲数量',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '逻辑删除',
+  `open` tinyint(1) NULL DEFAULT 0 COMMENT '是否公开',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of musiclist
 -- ----------------------------
-INSERT INTO `musiclist` VALUES (4, 1, '123', 2, '2020-07-28 19:43:50', 1);
-INSERT INTO `musiclist` VALUES (5, 1, '测试歌单', 0, '2020-08-29 16:13:29', 1);
-INSERT INTO `musiclist` VALUES (6, 1, '我的歌单', 1, '2020-08-29 16:16:24', 0);
-INSERT INTO `musiclist` VALUES (7, 1, '第二个歌单', 2, '2020-08-29 19:20:52', 0);
+INSERT INTO `musiclist` VALUES (4, 1, '123', 2, '2020-07-28 19:43:50', 1, 0);
+INSERT INTO `musiclist` VALUES (5, 1, '测试歌单', 0, '2020-08-29 16:13:29', 1, 0);
+INSERT INTO `musiclist` VALUES (6, 1, '我的歌单', 1, '2020-08-29 16:16:24', 0, 0);
+INSERT INTO `musiclist` VALUES (7, 1, '第二个歌单', 2, '2020-08-29 19:20:52', 0, 1);
+INSERT INTO `musiclist` VALUES (8, 2, '另一个号的歌单', 2, '2020-09-01 14:56:18', 0, 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -108,7 +114,7 @@ CREATE TABLE `role`  (
   `role_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role
@@ -130,7 +136,7 @@ CREATE TABLE `song`  (
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲封面图链接',
   `deleted` int(255) NULL DEFAULT NULL COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of song
@@ -157,12 +163,12 @@ CREATE TABLE `user`  (
   `is_active` tinyint(1) NULL DEFAULT NULL COMMENT '是否激活',
   `collects` int(11) NULL DEFAULT NULL COMMENT '收藏数',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '27709873044@qq.com', '$2a$10$GtLh4MglEzWhTJnhAcUlJeI1.mCONCBzElPYpWz4dnQm/whtAUJdW', '2020-07-22 19:34:39', '2020-08-29 09:51:25', 0, 1, 2);
+INSERT INTO `user` VALUES (1, 'admin', '27709873044@qq.com', '$2a$10$GtLh4MglEzWhTJnhAcUlJeI1.mCONCBzElPYpWz4dnQm/whtAUJdW', '2020-07-22 19:34:39', '2020-08-29 09:51:25', 0, 1, 3);
 INSERT INTO `user` VALUES (2, 'forestj', '2770987304@qqq.com', '$2a$10$dnP59qRUTZ3WMH3kdW/qM.QYl/a55WaC5vn/CRJuxn7mbyy3bm3Ma', '2020-07-23 20:33:03', '2020-07-23 20:33:03', 0, 1, 0);
 INSERT INTO `user` VALUES (3, 'test1', '2770987304@qq.com', '$2a$10$DPZif3kB27fjWQAsSp2qs.ceq6pVdewalFfsQm5QgLkQKePkA.wfq', '2020-08-28 22:56:23', '2020-08-29 09:30:59', 0, 1, NULL);
 
