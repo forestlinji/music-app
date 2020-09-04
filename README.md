@@ -10,7 +10,6 @@
 
 ## 项目技术栈
 
-- 安卓端: 主要由队友负责
 - web前端: Vue + Element UI + Axios
 - 后端: SpringBoot + MybatisPlus + SpringSecurity + JWT + Redis + OSS存储
 
@@ -22,7 +21,7 @@ music音乐应用。真的没啥好简介的hhhh，一个常规的音乐app
 
 ### 总览
 
-使用springboot的前后端分离项目，后端部分使用mysql+redis作为数据库，持久性数据存入mysql，验证码，激活码等临时数据存入redis。登录鉴权方面使用的是SpringSecurity和jwt，不再使用传统的session和cookie。此外，该项目有安卓端和web前端两套访问方式
+使用springboot的前后端分离项目，后端部分使用mysql+redis作为数据库，持久性数据存入mysql，验证码，激活码等临时数据存入redis。登录鉴权方面使用的是SpringSecurity和jwt，不再使用传统的session和cookie。
 
 ### 具体细节
 
